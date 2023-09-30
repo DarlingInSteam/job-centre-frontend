@@ -1,4 +1,4 @@
-package com.shadowshiftstudio.jobcentre.ui.theme
+package com.shadowshiftstudio.jobcentre.app_view.theme
 
 import android.app.Activity
 import android.os.Build

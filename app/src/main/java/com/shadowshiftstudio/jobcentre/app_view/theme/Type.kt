@@ -1,4 +1,4 @@
-package com.shadowshiftstudio.jobcentre.ui.theme
+package com.shadowshiftstudio.jobcentre.app_view.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
