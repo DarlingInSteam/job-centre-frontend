@@ -80,7 +80,7 @@ fun AuthorizationScreen(navController: NavController, onAuthorization: () -> Uni
             )
         }
         composable("registrationScreen") {
-//            Registration(navControllerAuthorization)
+            RegistrationScreen(navControllerAuthorization)
         }
     }
 }
