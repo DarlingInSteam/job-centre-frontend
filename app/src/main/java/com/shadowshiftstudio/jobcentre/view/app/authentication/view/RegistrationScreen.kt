@@ -34,6 +34,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.RichTooltipBox
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -81,9 +83,8 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RegistrationScreen(navController: NavHostController) {
+fun RegistrationScreen(navController: NavHostController, viewModelRegistration: RegistrationViewModel) {
     val context = LocalContext.current
-    val viewModelRegistration: RegistrationViewModel = RegistrationViewModel(context)
     var isTextVisible by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val bringIntoViewRequester = BringIntoViewRequester()
@@ -108,24 +109,29 @@ fun RegistrationScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.Top
         )
         {
-            LoginTextField(viewModelRegistration, bringIntoViewRequester)
+            TypeTabs(viewModelRegistration)
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            EmailTextField(viewModelRegistration, bringIntoViewRequester)
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            RegPasswordField(EnterPasswordHint, viewModelRegistration, bringIntoViewRequester)
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            RepeatPasswordField(RepeatPasswordHint, viewModelRegistration, bringIntoViewRequester)
+            if (viewModelRegistration.selectedTabIndex.intValue == 0) {
+                LoginTextField(viewModelRegistration, bringIntoViewRequester)
+                Spacer(modifier = Modifier.height(20.dp))
+                RegPasswordField(EnterPasswordHint, viewModelRegistration, bringIntoViewRequester)
+                Spacer(modifier = Modifier.height(20.dp))
+                RepeatPasswordField(RepeatPasswordHint, viewModelRegistration, bringIntoViewRequester)
+            } else {
+                LoginTextField(viewModelRegistration, bringIntoViewRequester)
+                Spacer(modifier = Modifier.height(20.dp))
+                RegPasswordField(EnterPasswordHint, viewModelRegistration, bringIntoViewRequester)
+                Spacer(modifier = Modifier.height(20.dp))
+                RepeatPasswordField(RepeatPasswordHint, viewModelRegistration, bringIntoViewRequester)
+            }
 
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .bringIntoViewRequester(bringIntoViewRequester),
                 onClick = {
                     if(viewModelRegistration.isAllDataEntered()){
@@ -153,82 +159,29 @@ fun RegistrationScreen(navController: NavHostController) {
 }
 
 @Composable
-fun DropdownTextField(items: List<String>) {
-    var expanded by remember { mutableStateOf(false) }
-    var selectedItem by remember { mutableStateOf(items.firstOrNull()) }
-    var iconAfter by remember {
-        mutableStateOf(Icons.Default.ArrowRight)
-    }
-    var iconBefore by remember {
-        mutableStateOf(Icons.Default.ArrowDropDown)
-    }
-
+fun TypeTabs(viewModel: RegistrationViewModel) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.Start
+        modifier = Modifier.fillMaxWidth()
     ) {
-
-        Box(
+        TabRow(
+            selectedTabIndex = viewModel.selectedTabIndex.intValue,
             modifier = Modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(8.dp))
-                .clickable { expanded = true }
-                .background(md_theme_dark_surface_container_higher),
-            contentAlignment = Alignment.CenterStart
+                .height(60.dp),
+            divider = ({})
         ) {
-            BasicTextField(
-                modifier = Modifier
-                    .height(60.dp)
-                    .padding(top = 20.dp, start = 15.dp),
-                value = TextFieldValue(selectedItem ?: ""),
-                enabled = false,
-                onValueChange = { /* Disable editing */ },
-                textStyle = TextStyle(
-                    color = md_theme_dark_onSurfaceVariant,
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.Start
-                ),
-            )
-            Icon(
-                if (expanded) iconBefore else iconAfter, "", modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(end = 10.dp)
-            )
-            HorizontalDivider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomEnd),
-                thickness = 1.dp,
-                color = md_theme_dark_onSurfaceVariant
-            )
-        }
-
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .padding(start = 23.dp, end = 23.dp)
-                .fillMaxWidth()
-                .background(md_theme_dark_surface_container_higher),
-        ) {
-            items.forEach { item ->
-                TextButton(
-                    onClick = {
-                        selectedItem = item
-                        expanded = false
-                    },
+            viewModel.tabTitles.forEachIndexed { index, title ->
+                Tab(
+                    selected = false,
                     modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .fillMaxWidth(),
-                    colors = ButtonColors(
-                        md_theme_dark_surface_container_higher,
-                        md_theme_dark_onSurfaceVariant,
-                        Color.White,
-                        Color.White
-                    )
-
+                        .height(60.dp),
+                    onClick = {
+                        viewModel.selectedTabIndex.intValue = index
+                    }
                 ) {
-                    Text(text = item)
+                    Text(
+                        text = title,
+                        modifier = Modifier.background(Color.Transparent),
+                    )
                 }
             }
         }
@@ -281,47 +234,6 @@ fun LoginTextField(viewModelRegistration: RegistrationViewModel, bringIntoViewRe
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = loginErrorMessage,
-            fontSize = 12.sp,
-            color = md_theme_light_error
-        )
-    }
-}
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun EmailTextField(viewModelRegistration: RegistrationViewModel, bringIntoViewRequester: BringIntoViewRequester)
-{
-
-    var isEmailError by remember { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
-    val focusManager = LocalFocusManager.current
-
-    TextField(
-        value = viewModelRegistration.email.value,
-        onValueChange = {
-            viewModelRegistration.email.value = it
-            isEmailError = !viewModelRegistration.isEmailValid(viewModelRegistration.email.value)},
-        maxLines = 1,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
-        placeholder = { Text(EnterEmailHint) },
-        label = { Text(EnterEmailHint) },
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(
-            onDone = {focusManager.clearFocus()}
-        )
-    )
-    if (isEmailError && viewModelRegistration.email.value.isNotEmpty()) {
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = InputErrorMessage,
             fontSize = 12.sp,
             color = md_theme_light_error
         )

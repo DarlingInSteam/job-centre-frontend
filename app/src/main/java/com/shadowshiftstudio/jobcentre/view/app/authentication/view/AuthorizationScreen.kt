@@ -48,6 +48,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.shadowshiftstudio.jobcentre.view.app.authentication.view_model.AuthorizationViewModel
+import com.shadowshiftstudio.jobcentre.view.app.authentication.view_model.RegistrationViewModel
 import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_surfaceVariant
 import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_light_error
 import kotlinx.coroutines.launch
@@ -57,6 +58,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun AuthorizationScreen(navController: NavController, onAuthorization: () -> Unit) {
     val navControllerAuthorization = rememberNavController()
+    val context = LocalContext.current
+    val viewModel: RegistrationViewModel = RegistrationViewModel(context)
 
     NavHost(navController = navControllerAuthorization, startDestination = "main") {
         composable("main") {
@@ -80,7 +83,7 @@ fun AuthorizationScreen(navController: NavController, onAuthorization: () -> Uni
             )
         }
         composable("registrationScreen") {
-            RegistrationScreen(navControllerAuthorization)
+            RegistrationScreen(navControllerAuthorization, viewModel)
         }
     }
 }
@@ -162,8 +165,8 @@ fun LoginTextField(viewModelLogin: AuthorizationViewModel, bringIntoViewRequeste
                     }
                 }
             },
-        placeholder = { Text("Логин или E-mail") },
-        label = { Text("Логин или E-mail") },
+        placeholder = { Text("Логин") },
+        label = { Text("Логин") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(
             onDone = {focusManager.clearFocus()}
