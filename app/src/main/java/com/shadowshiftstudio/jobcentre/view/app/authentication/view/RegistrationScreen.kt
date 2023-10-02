@@ -130,6 +130,8 @@ fun RegistrationScreen(navController: NavHostController, viewModelRegistration: 
             } else {
                 LoginTextField(viewModelRegistration, bringIntoViewRequester)
                 Spacer(modifier = Modifier.height(20.dp))
+                FieldsForEmployer(coroutineScope, viewModelRegistration, bringIntoViewRequester)
+                Spacer(modifier = Modifier.height(20.dp))
                 RegPasswordField(EnterPasswordHint, viewModelRegistration, bringIntoViewRequester)
                 Spacer(modifier = Modifier.height(20.dp))
                 RepeatPasswordField(RepeatPasswordHint, viewModelRegistration, bringIntoViewRequester)
@@ -142,8 +144,16 @@ fun RegistrationScreen(navController: NavHostController, viewModelRegistration: 
                     .fillMaxWidth()
                     .bringIntoViewRequester(bringIntoViewRequester),
                 onClick = {
-                    if(viewModelRegistration.isAllDataEntered()){
+                    if(viewModelRegistration.isAllDataEnteredUnemployed() && viewModelRegistration.selectedTabIndex.intValue == 0){
 //                        coroutineScope.launch {
+//                            viewModelRegistration.registerUser()
+//                            if(viewModelRegistration.registerStatusLiveData.value == true) {
+//                                navController.popBackStack()
+//                            }
+//                        }
+                    }
+                    else if(viewModelRegistration.isAllDataEnteredEmployer() && viewModelRegistration.selectedTabIndex.intValue == 1) {
+                        //                        coroutineScope.launch {
 //                            viewModelRegistration.registerUser()
 //                            if(viewModelRegistration.registerStatusLiveData.value == true) {
 //                                navController.popBackStack()
@@ -159,11 +169,72 @@ fun RegistrationScreen(navController: NavHostController, viewModelRegistration: 
                     text = FillAllFields,
                     fontSize = 12.sp,
                     color = md_theme_light_error,
-                    textAlign = TextAlign.Left
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
                 )
             }
         }
     }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun FieldsForEmployer(
+    coroutineScope: CoroutineScope,
+    viewModelRegistration: RegistrationViewModel,
+    bringIntoViewRequester: BringIntoViewRequester
+) {
+    val focusManager = LocalFocusManager.current
+
+    TextField(
+        value = viewModelRegistration.employerName.value,
+        onValueChange = {
+            viewModelRegistration.employerName.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Название компании") },
+        label = { Text("Название компании") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    TextField(
+        value = viewModelRegistration.address.value,
+        onValueChange = {
+            viewModelRegistration.address.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Адрес компании") },
+        label = { Text("Адрес компании") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -327,6 +398,162 @@ fun FieldsForUnemployed(
             },
         placeholder = { Text("Опыт работы") },
         label = { Text("Опыт работы") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    TextField(
+        value = viewModelRegistration.passportNumber.value,
+        onValueChange = {
+            viewModelRegistration.passportNumber.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Номер и серия паспорта") },
+        label = { Text("Номер и серия паспорта") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    TextField(
+        value = viewModelRegistration.passportIssueDate.value,
+        onValueChange = {
+            viewModelRegistration.passportIssueDate.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Дата выдачи пасорта") },
+        label = { Text("Дата выдачи пасорта") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    TextField(
+        value = viewModelRegistration.passportIssueBy.value,
+        onValueChange = {
+            viewModelRegistration.passportIssueBy.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Кем выдан паспорт") },
+        label = { Text("Кем выдан паспорт") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    TextField(
+        value = viewModelRegistration.dateOfBirth.value,
+        onValueChange = {
+            viewModelRegistration.dateOfBirth.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Дата рождения") },
+        label = { Text("Дата рождения") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    TextField(
+        value = viewModelRegistration.address.value,
+        onValueChange = {
+            viewModelRegistration.address.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Адрес прописки") },
+        label = { Text("Адрес прописки") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    TextField(
+        value = viewModelRegistration.photo.value,
+        onValueChange = {
+            viewModelRegistration.photo.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Ссылка на фотографию") },
+        label = { Text("Ссылка на фотографию") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(
             onDone = {focusManager.clearFocus()}

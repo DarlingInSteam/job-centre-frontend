@@ -21,7 +21,15 @@ class RegistrationViewModel(private val context: Context): ViewModel() {
     var educationDocumentData: MutableState<String> = mutableStateOf("")
     var speciality: MutableState<String> = mutableStateOf("")
     var workExperience: MutableState<String> = mutableStateOf("")
+    var employerName: MutableState<String> = mutableStateOf("")
+    var address: MutableState<String> = mutableStateOf("")
     val tabTitles = listOf("Безработный", "Работодатель")
+
+    var passportNumber: MutableState<String> = mutableStateOf("")
+    var passportIssueDate: MutableState<String> = mutableStateOf("")
+    var passportIssueBy: MutableState<String> = mutableStateOf("")
+    var dateOfBirth: MutableState<String> = mutableStateOf("")
+    var photo: MutableState<String> = mutableStateOf("")
 
     fun isLoginValid(login: String): LoginStates {
         val pattern = Regex("^[a-zA-Z0-9!@#\$%^&*()\\-_=+\\\\|\\[{\\]};:'\",<.>/?]*$")
@@ -65,7 +73,20 @@ class RegistrationViewModel(private val context: Context): ViewModel() {
         return res
     }
 
-    fun isAllDataEntered():Boolean
+    fun isAllDataEnteredEmployer(): Boolean {
+        var res = false
+
+        if(isLoginValid(login.value) == LoginStates.VALID
+            && isPasswordValid(password.value)
+            && isPasswordsMatch()
+            && employerName.value.isNotEmpty()
+            && address.value.isNotEmpty()
+        ) res = true;
+
+        return res;
+    }
+
+    fun isAllDataEnteredUnemployed():Boolean
     {
         var res = false
         if(isLoginValid(login.value) == LoginStates.VALID
@@ -77,6 +98,11 @@ class RegistrationViewModel(private val context: Context): ViewModel() {
             && educationalInstitution.value.isNotEmpty()
             && speciality.value.isNotEmpty()
             && workExperience.value.isNotEmpty()
+            && passportNumber.value.isNotEmpty()
+            && passportIssueBy.value.isNotEmpty()
+            && passportIssueDate.value.isNotEmpty()
+            && dateOfBirth.value.isNotEmpty()
+            && photo.value.isNotEmpty()
         )
             res = true
         return res
