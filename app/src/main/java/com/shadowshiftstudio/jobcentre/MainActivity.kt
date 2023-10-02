@@ -22,9 +22,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.shadowshiftstudio.jobcentre.app_view.authentication.view.AuthorizationScreen
-import com.shadowshiftstudio.jobcentre.app_view.theme.JobCentreTheme
-import com.shadowshiftstudio.jobcentre.app_view.theme.md_theme_dark_background
+import com.shadowshiftstudio.jobcentre.view.app.authentication.view.AuthorizationScreen
+import com.shadowshiftstudio.jobcentre.view.app.theme.JobCentreTheme
+import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_background
 import com.shadowshiftstudio.jobcentre.view.employer.view.bottomnav.ConstantsEmployer
 
 class MainActivity : ComponentActivity() {

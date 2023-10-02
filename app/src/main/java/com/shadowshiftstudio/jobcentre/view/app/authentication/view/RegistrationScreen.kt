@@ -1,4 +1,4 @@
-package com.shadowshiftstudio.jobcentre.app_view.authentication.view
+package com.shadowshiftstudio.jobcentre.view.app.authentication.view
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -70,11 +70,11 @@ import com.shadowshiftstudio.jobcentre.InputErrorMessage
 import com.shadowshiftstudio.jobcentre.PasswordsDontMatch
 import com.shadowshiftstudio.jobcentre.RegisterButtonText
 import com.shadowshiftstudio.jobcentre.RepeatPasswordHint
-import com.shadowshiftstudio.jobcentre.app_view.authentication.view_model.RegistrationViewModel
-import com.shadowshiftstudio.jobcentre.app_view.theme.md_theme_light_error
-import com.shadowshiftstudio.jobcentre.app_view.theme.md_theme_dark_onSurface
-import com.shadowshiftstudio.jobcentre.app_view.theme.md_theme_dark_onSurfaceVariant
-import com.shadowshiftstudio.jobcentre.app_view.theme.md_theme_dark_surface_container_higher
+import com.shadowshiftstudio.jobcentre.view.app.authentication.view_model.RegistrationViewModel
+import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_light_error
+import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_onSurface
+import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_onSurfaceVariant
+import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_surface_container_higher
 
 import com.shadowshiftstudio.jobcentre.model.enum.LoginStates
 import kotlinx.coroutines.launch

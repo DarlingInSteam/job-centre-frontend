@@ -1,4 +1,4 @@
-package com.shadowshiftstudio.jobcentre.app_view.authentication.view_model
+package com.shadowshiftstudio.jobcentre.view.app.authentication.view_model
 
 import android.content.Context
 import android.text.TextUtils

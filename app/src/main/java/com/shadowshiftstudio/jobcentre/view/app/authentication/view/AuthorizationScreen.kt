@@ -1,4 +1,4 @@
-package com.shadowshiftstudio.jobcentre.app_view.authentication.view
+package com.shadowshiftstudio.jobcentre.view.app.authentication.view
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -47,9 +47,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.shadowshiftstudio.jobcentre.app_view.authentication.view_model.AuthorizationViewModel
-import com.shadowshiftstudio.jobcentre.app_view.theme.md_theme_dark_surfaceVariant
-import com.shadowshiftstudio.jobcentre.app_view.theme.md_theme_light_error
+import com.shadowshiftstudio.jobcentre.view.app.authentication.view_model.AuthorizationViewModel
+import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_surfaceVariant
+import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_light_error
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
