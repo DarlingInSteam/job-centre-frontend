@@ -11,10 +11,16 @@ import com.shadowshiftstudio.jobcentre.model.enum.LoginStates
 
 class RegistrationViewModel(private val context: Context): ViewModel() {
     var login: MutableState<String> = mutableStateOf("")
+    var fullName: MutableState<String> = mutableStateOf("")
     var password: MutableState<String> = mutableStateOf("")
     var repeatPassword: MutableState<String> = mutableStateOf("")
     val registerStatusLiveData: MutableLiveData<Boolean> = MutableLiveData()
     var selectedTabIndex  = mutableIntStateOf(0)
+    var age: MutableState<String> = mutableStateOf("")
+    var educationalInstitution: MutableState<String> = mutableStateOf("")
+    var educationDocumentData: MutableState<String> = mutableStateOf("")
+    var speciality: MutableState<String> = mutableStateOf("")
+    var workExperience: MutableState<String> = mutableStateOf("")
     val tabTitles = listOf("Безработный", "Работодатель")
 
     fun isLoginValid(login: String): LoginStates {
@@ -64,7 +70,14 @@ class RegistrationViewModel(private val context: Context): ViewModel() {
         var res = false
         if(isLoginValid(login.value) == LoginStates.VALID
             && isPasswordValid(password.value)
-            && isPasswordsMatch())
+            && isPasswordsMatch()
+            && fullName.value.isNotEmpty()
+            && age.value.isNotEmpty()
+            && educationDocumentData.value.isNotEmpty()
+            && educationalInstitution.value.isNotEmpty()
+            && speciality.value.isNotEmpty()
+            && workExperience.value.isNotEmpty()
+        )
             res = true
         return res
     }

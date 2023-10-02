@@ -1,6 +1,7 @@
 package com.shadowshiftstudio.jobcentre.view.app.authentication.view
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,10 +16,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.relocation.BringIntoViewRequester
 import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -79,6 +82,7 @@ import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_onSurfaceVar
 import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_surface_container_higher
 
 import com.shadowshiftstudio.jobcentre.model.enum.LoginStates
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -88,6 +92,7 @@ fun RegistrationScreen(navController: NavHostController, viewModelRegistration: 
     var isTextVisible by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
     val bringIntoViewRequester = BringIntoViewRequester()
+    val scrollState = rememberScrollState()
 
     Column() {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -105,7 +110,8 @@ fun RegistrationScreen(navController: NavHostController, viewModelRegistration: 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 23.dp, end = 23.dp),
+                .padding(start = 23.dp, end = 23.dp)
+                .verticalScroll(scrollState),
             verticalArrangement = Arrangement.Top
         )
         {
@@ -115,6 +121,8 @@ fun RegistrationScreen(navController: NavHostController, viewModelRegistration: 
 
             if (viewModelRegistration.selectedTabIndex.intValue == 0) {
                 LoginTextField(viewModelRegistration, bringIntoViewRequester)
+                Spacer(modifier = Modifier.height(20.dp))
+                FieldsForUnemployed(coroutineScope, viewModelRegistration, bringIntoViewRequester)
                 Spacer(modifier = Modifier.height(20.dp))
                 RegPasswordField(EnterPasswordHint, viewModelRegistration, bringIntoViewRequester)
                 Spacer(modifier = Modifier.height(20.dp))
@@ -153,6 +161,258 @@ fun RegistrationScreen(navController: NavHostController, viewModelRegistration: 
                     color = md_theme_light_error,
                     textAlign = TextAlign.Left
                 )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun FieldsForUnemployed(
+    coroutineScope: CoroutineScope,
+    viewModelRegistration: RegistrationViewModel,
+    bringIntoViewRequester: BringIntoViewRequester
+) {
+    val focusManager = LocalFocusManager.current
+
+    TextField(
+        value = viewModelRegistration.fullName.value,
+        onValueChange = {
+            viewModelRegistration.fullName.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("ФИО") },
+        label = { Text("ФИО") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    TextField(
+        value = viewModelRegistration.age.value,
+        onValueChange = {
+            viewModelRegistration.age.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Возраст") },
+        label = { Text("Возраст") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    DropdownTextField(listOf("Начальное общее", "Основное общее", "Среднее общее", "Среднее профессиональное", "Бакалавриат", "Специалитет, магистратура", "Высшая квалификация"))
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    TextField(
+        value = viewModelRegistration.educationalInstitution.value,
+        onValueChange = {
+            viewModelRegistration.educationalInstitution.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Образовательное учреждение") },
+        label = { Text("Образовательное учреждение") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    TextField(
+        value = viewModelRegistration.educationDocumentData.value,
+        onValueChange = {
+            viewModelRegistration.educationDocumentData.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Номер документа об оброзазовании") },
+        label = { Text("Номер документа об оброзазовании") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    TextField(
+        value = viewModelRegistration.speciality.value,
+        onValueChange = {
+            viewModelRegistration.speciality.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Специальность") },
+        label = { Text("Специальность") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    TextField(
+        value = viewModelRegistration.workExperience.value,
+        onValueChange = {
+            viewModelRegistration.workExperience.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Опыт работы") },
+        label = { Text("Опыт работы") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+}
+
+@Composable
+fun DropdownTextField(items: List<String>) {
+    var expanded by remember { mutableStateOf(false) }
+    var selectedItem by remember { mutableStateOf(items.firstOrNull()) }
+    var iconAfter by remember {
+        mutableStateOf(Icons.Default.ArrowRight)
+    }
+    var iconBefore by remember {
+        mutableStateOf(Icons.Default.ArrowDropDown)
+    }
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.Start
+    ) {
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(8.dp))
+                .clickable { expanded = true }
+                .background(md_theme_dark_surface_container_higher),
+            contentAlignment = Alignment.CenterStart
+        ) {
+            BasicTextField(
+                modifier = Modifier
+                    .height(60.dp)
+                    .padding(top = 20.dp, start = 15.dp),
+                value = TextFieldValue(selectedItem ?: ""),
+                enabled = false,
+                onValueChange = { /* Disable editing */ },
+                textStyle = TextStyle(
+                    color = md_theme_dark_onSurfaceVariant,
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Start
+                ),
+            )
+            Icon(
+                if (expanded) iconBefore else iconAfter, "", modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(end = 10.dp)
+            )
+            HorizontalDivider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomEnd),
+                thickness = 1.dp,
+                color = md_theme_dark_onSurfaceVariant
+            )
+        }
+
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier
+                .background(md_theme_dark_surface_container_higher)
+                .padding(start = 23.dp, end = 23.dp)
+                .fillMaxWidth()
+                ,
+        ) {
+            items.forEach { item ->
+                TextButton(
+                    onClick = {
+                        selectedItem = item
+                        expanded = false
+                    },
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .fillMaxWidth(),
+                    colors = ButtonColors(
+                        md_theme_dark_surface_container_higher,
+                        md_theme_dark_onSurfaceVariant,
+                        Color.White,
+                        Color.White
+                    )
+
+                ) {
+                    Text(text = item)
+                }
             }
         }
     }
