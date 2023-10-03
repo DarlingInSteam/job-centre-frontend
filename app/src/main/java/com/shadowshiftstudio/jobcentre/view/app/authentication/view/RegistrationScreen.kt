@@ -80,8 +80,8 @@ import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_light_error
 import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_onSurface
 import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_onSurfaceVariant
 import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_surface_container_higher
-
 import com.shadowshiftstudio.jobcentre.model.enum.LoginStates
+import com.shadowshiftstudio.jobcentre.model.enum.Role
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -145,20 +145,20 @@ fun RegistrationScreen(navController: NavHostController, viewModelRegistration: 
                     .bringIntoViewRequester(bringIntoViewRequester),
                 onClick = {
                     if(viewModelRegistration.isAllDataEnteredUnemployed() && viewModelRegistration.selectedTabIndex.intValue == 0){
-//                        coroutineScope.launch {
-//                            viewModelRegistration.registerUser()
-//                            if(viewModelRegistration.registerStatusLiveData.value == true) {
-//                                navController.popBackStack()
-//                            }
-//                        }
+                        coroutineScope.launch {
+                            viewModelRegistration.registration(Role.UNEMPLOYED)
+                            if(viewModelRegistration.registerStatusLiveData.value == true) {
+                                navController.popBackStack()
+                            }
+                        }
                     }
                     else if(viewModelRegistration.isAllDataEnteredEmployer() && viewModelRegistration.selectedTabIndex.intValue == 1) {
-                        //                        coroutineScope.launch {
-//                            viewModelRegistration.registerUser()
-//                            if(viewModelRegistration.registerStatusLiveData.value == true) {
-//                                navController.popBackStack()
-//                            }
-//                        }
+                        coroutineScope.launch {
+                            viewModelRegistration.registration(Role.EMPLOYED)
+                            if(viewModelRegistration.registerStatusLiveData.value == true) {
+                                navController.popBackStack()
+                            }
+                        }
                     }
                     else isTextVisible = true},
                 content = { Text(text = RegisterButtonText, fontSize = 18.sp) }
@@ -185,6 +185,32 @@ fun FieldsForEmployer(
     bringIntoViewRequester: BringIntoViewRequester
 ) {
     val focusManager = LocalFocusManager.current
+
+    TextField(
+        value = viewModelRegistration.phone.value,
+        onValueChange = {
+            viewModelRegistration.phone.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Номер телефона") },
+        label = { Text("Номер телефона") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
 
     TextField(
         value = viewModelRegistration.employerName.value,
@@ -245,6 +271,32 @@ fun FieldsForUnemployed(
     bringIntoViewRequester: BringIntoViewRequester
 ) {
     val focusManager = LocalFocusManager.current
+
+    TextField(
+        value = viewModelRegistration.phone.value,
+        onValueChange = {
+            viewModelRegistration.phone.value = it
+        },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Номер телефона") },
+        label = { Text("Номер телефона") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+
+    Spacer(modifier = Modifier.height(20.dp))
 
     TextField(
         value = viewModelRegistration.fullName.value,

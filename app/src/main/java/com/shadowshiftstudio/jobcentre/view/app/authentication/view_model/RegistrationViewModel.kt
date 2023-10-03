@@ -7,7 +7,13 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.shadowshiftstudio.jobcentre.data.authentication.api_request.AuthenticationRequest
+import com.shadowshiftstudio.jobcentre.domain.authentication.use_case.AuthenticationUseCase
 import com.shadowshiftstudio.jobcentre.model.enum.LoginStates
+import com.shadowshiftstudio.jobcentre.model.enum.Role
+import com.shadowshiftstudio.jobcentre.model.request.RegisterRequest
+import kotlinx.coroutines.launch
 
 class RegistrationViewModel(private val context: Context): ViewModel() {
     var login: MutableState<String> = mutableStateOf("")
@@ -24,6 +30,7 @@ class RegistrationViewModel(private val context: Context): ViewModel() {
     var employerName: MutableState<String> = mutableStateOf("")
     var address: MutableState<String> = mutableStateOf("")
     val tabTitles = listOf("Безработный", "Работодатель")
+    val phone: MutableState<String> = mutableStateOf("")
 
     var passportNumber: MutableState<String> = mutableStateOf("")
     var passportIssueDate: MutableState<String> = mutableStateOf("")
@@ -81,6 +88,7 @@ class RegistrationViewModel(private val context: Context): ViewModel() {
             && isPasswordsMatch()
             && employerName.value.isNotEmpty()
             && address.value.isNotEmpty()
+            && phone.value.isNotEmpty()
         ) res = true;
 
         return res;
@@ -103,8 +111,21 @@ class RegistrationViewModel(private val context: Context): ViewModel() {
             && passportIssueDate.value.isNotEmpty()
             && dateOfBirth.value.isNotEmpty()
             && photo.value.isNotEmpty()
+            && phone.value.isNotEmpty()
         )
             res = true
         return res
+    }
+
+    private val authenticationUseCase: AuthenticationUseCase =
+        AuthenticationUseCase(AuthenticationRequest())
+
+    suspend fun registration(role: Role) {
+        viewModelScope.launch {
+            var request = RegisterRequest(login.value, phone.value, password.value, role)
+            val status = authenticationUseCase.registerUser(request)
+
+            registerStatusLiveData.value = status
+        }
     }
 }

@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
@@ -22,6 +23,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.shadowshiftstudio.jobcentre.data.app.secure_data.SecureStore
 import com.shadowshiftstudio.jobcentre.view.app.authentication.view.AuthorizationScreen
 import com.shadowshiftstudio.jobcentre.view.app.theme.JobCentreTheme
 import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_background
@@ -31,6 +33,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            SecureStore.initialize(LocalContext.current)
+
             JobCentreTheme(dynamicColor = false, darkTheme = true) {
                 val navController = rememberNavController()
 
