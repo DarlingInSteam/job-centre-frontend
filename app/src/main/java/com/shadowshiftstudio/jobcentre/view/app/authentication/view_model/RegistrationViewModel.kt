@@ -9,9 +9,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.shadowshiftstudio.jobcentre.data.authentication.api_request.AuthenticationRequest
+import com.shadowshiftstudio.jobcentre.data.employer.api_request.EmployerRequest
 import com.shadowshiftstudio.jobcentre.domain.authentication.use_case.AuthenticationUseCase
+import com.shadowshiftstudio.jobcentre.domain.employer.use_case.EmployerUseCase
 import com.shadowshiftstudio.jobcentre.model.enum.LoginStates
 import com.shadowshiftstudio.jobcentre.model.enum.Role
+import com.shadowshiftstudio.jobcentre.model.request.CreateEmployerRequest
 import com.shadowshiftstudio.jobcentre.model.request.RegisterRequest
 import kotlinx.coroutines.launch
 
@@ -120,12 +123,22 @@ class RegistrationViewModel(private val context: Context): ViewModel() {
     private val authenticationUseCase: AuthenticationUseCase =
         AuthenticationUseCase(AuthenticationRequest())
 
+    private val employerUseCase: EmployerUseCase =
+        EmployerUseCase(EmployerRequest())
+
     suspend fun registration(role: Role) {
         viewModelScope.launch {
             var request = RegisterRequest(login.value, phone.value, password.value, role)
             val status = authenticationUseCase.registerUser(request)
 
             registerStatusLiveData.value = status
+        }.join()
+    }
+
+    suspend fun createEmployer() {
+        viewModelScope.launch {
+            var request = CreateEmployerRequest(employerName.value, address.value, login.value)
+            var status = employerUseCase.createEmployer(request)
         }
     }
 }

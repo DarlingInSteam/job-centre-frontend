@@ -155,6 +155,7 @@ fun RegistrationScreen(navController: NavHostController, viewModelRegistration: 
                     else if(viewModelRegistration.isAllDataEnteredEmployer() && viewModelRegistration.selectedTabIndex.intValue == 1) {
                         coroutineScope.launch {
                             viewModelRegistration.registration(Role.EMPLOYED)
+                            viewModelRegistration.createEmployer()
                             if(viewModelRegistration.registerStatusLiveData.value == true) {
                                 navController.popBackStack()
                             }
