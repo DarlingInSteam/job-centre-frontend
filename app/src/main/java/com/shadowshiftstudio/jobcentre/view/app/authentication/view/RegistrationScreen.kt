@@ -120,21 +120,21 @@ fun RegistrationScreen(navController: NavHostController, viewModelRegistration: 
             Spacer(modifier = Modifier.height(20.dp))
 
             if (viewModelRegistration.selectedTabIndex.intValue == 0) {
-                LoginTextField(viewModelRegistration, bringIntoViewRequester)
+                LoginTextField(viewModelRegistration)
                 Spacer(modifier = Modifier.height(20.dp))
-                FieldsForUnemployed(coroutineScope, viewModelRegistration, bringIntoViewRequester)
+                FieldsForUnemployed(coroutineScope, viewModelRegistration)
                 Spacer(modifier = Modifier.height(20.dp))
-                RegPasswordField(EnterPasswordHint, viewModelRegistration, bringIntoViewRequester)
+                RegPasswordField(EnterPasswordHint, viewModelRegistration)
                 Spacer(modifier = Modifier.height(20.dp))
-                RepeatPasswordField(RepeatPasswordHint, viewModelRegistration, bringIntoViewRequester)
+                RepeatPasswordField(RepeatPasswordHint, viewModelRegistration)
             } else {
-                LoginTextField(viewModelRegistration, bringIntoViewRequester)
+                LoginTextField(viewModelRegistration)
                 Spacer(modifier = Modifier.height(20.dp))
-                FieldsForEmployer(coroutineScope, viewModelRegistration, bringIntoViewRequester)
+                FieldsForEmployer(coroutineScope, viewModelRegistration)
                 Spacer(modifier = Modifier.height(20.dp))
-                RegPasswordField(EnterPasswordHint, viewModelRegistration, bringIntoViewRequester)
+                RegPasswordField(EnterPasswordHint, viewModelRegistration)
                 Spacer(modifier = Modifier.height(20.dp))
-                RepeatPasswordField(RepeatPasswordHint, viewModelRegistration, bringIntoViewRequester)
+                RepeatPasswordField(RepeatPasswordHint, viewModelRegistration)
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -183,7 +183,6 @@ fun RegistrationScreen(navController: NavHostController, viewModelRegistration: 
 fun FieldsForEmployer(
     coroutineScope: CoroutineScope,
     viewModelRegistration: RegistrationViewModel,
-    bringIntoViewRequester: BringIntoViewRequester
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -195,14 +194,7 @@ fun FieldsForEmployer(
         maxLines = 1,
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            .clip(RoundedCornerShape(8.dp)),
         placeholder = { Text("Номер телефона") },
         label = { Text("Номер телефона") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -222,13 +214,7 @@ fun FieldsForEmployer(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Название компании") },
         label = { Text("Название компании") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -248,13 +234,7 @@ fun FieldsForEmployer(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Адрес компании") },
         label = { Text("Адрес компании") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -269,7 +249,7 @@ fun FieldsForEmployer(
 fun FieldsForUnemployed(
     coroutineScope: CoroutineScope,
     viewModelRegistration: RegistrationViewModel,
-    bringIntoViewRequester: BringIntoViewRequester
+    
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -282,13 +262,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Номер телефона") },
         label = { Text("Номер телефона") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -308,13 +282,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("ФИО") },
         label = { Text("ФИО") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -334,13 +302,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Возраст") },
         label = { Text("Возраст") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -364,13 +326,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Образовательное учреждение") },
         label = { Text("Образовательное учреждение") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -390,13 +346,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Номер документа об оброзазовании") },
         label = { Text("Номер документа об оброзазовании") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -416,13 +366,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Специальность") },
         label = { Text("Специальность") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -442,13 +386,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Опыт работы") },
         label = { Text("Опыт работы") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -468,13 +406,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Номер и серия паспорта") },
         label = { Text("Номер и серия паспорта") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -494,13 +426,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Дата выдачи пасорта") },
         label = { Text("Дата выдачи пасорта") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -520,13 +446,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Кем выдан паспорт") },
         label = { Text("Кем выдан паспорт") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -546,13 +466,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Дата рождения") },
         label = { Text("Дата рождения") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -572,13 +486,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Адрес прописки") },
         label = { Text("Адрес прописки") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -598,13 +506,7 @@ fun FieldsForUnemployed(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text("Ссылка на фотографию") },
         label = { Text("Ссылка на фотографию") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -730,7 +632,7 @@ fun TypeTabs(viewModel: RegistrationViewModel) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun LoginTextField(viewModelRegistration: RegistrationViewModel, bringIntoViewRequester: BringIntoViewRequester)
+fun LoginTextField(viewModelRegistration: RegistrationViewModel, )
 {
     var isLoginError by remember { mutableStateOf(false) }
     var loginErrorMessage by remember { mutableStateOf("") }
@@ -756,13 +658,7 @@ fun LoginTextField(viewModelRegistration: RegistrationViewModel, bringIntoViewRe
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text(CreateLoginHint) },
         label = { Text(CreateLoginHint) },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -782,7 +678,7 @@ fun LoginTextField(viewModelRegistration: RegistrationViewModel, bringIntoViewRe
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun RegPasswordField(Hint: String, viewModel: RegistrationViewModel, bringIntoViewRequester: BringIntoViewRequester)
+fun RegPasswordField(Hint: String, viewModel: RegistrationViewModel, )
 {
     var passwordVisability by remember { mutableStateOf(false) }
     var isPasswordError by remember { mutableStateOf(false) }
@@ -798,13 +694,7 @@ fun RegPasswordField(Hint: String, viewModel: RegistrationViewModel, bringIntoVi
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text(Hint) },
         label = { Text(Hint) },
         trailingIcon =
@@ -849,7 +739,7 @@ fun RegPasswordField(Hint: String, viewModel: RegistrationViewModel, bringIntoVi
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RepeatPasswordField(Hint: String, viewModel: RegistrationViewModel, bringIntoViewRequester: BringIntoViewRequester)
+fun RepeatPasswordField(Hint: String, viewModel: RegistrationViewModel, )
 {
     var passwordVisability by remember { mutableStateOf(false) }
     var isPasswordsEqual by remember { mutableStateOf(false) }
@@ -864,13 +754,7 @@ fun RepeatPasswordField(Hint: String, viewModel: RegistrationViewModel, bringInt
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(8.dp))
-            .onFocusEvent { event ->
-                if (event.isFocused) {
-                    coroutineScope.launch {
-                        bringIntoViewRequester.bringIntoView()
-                    }
-                }
-            },
+            ,
         placeholder = { Text(Hint) },
         label = { Text(Hint) },
         trailingIcon = {

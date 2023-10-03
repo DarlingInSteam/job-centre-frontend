@@ -56,7 +56,7 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AuthorizationScreen(navController: NavController, onAuthorization: () -> Unit) {
+fun AuthorizationScreen(navController: NavController, isAuthorization: () -> Unit) {
     val navControllerAuthorization = rememberNavController()
     val context = LocalContext.current
     val viewModel: RegistrationViewModel = RegistrationViewModel(context)
@@ -65,7 +65,9 @@ fun AuthorizationScreen(navController: NavController, onAuthorization: () -> Uni
         composable("main") {
             Scaffold(
                 modifier = Modifier.fillMaxSize(),
-                content = { AuthorizationContent(navController, onAuthorization) },
+                content = { AuthorizationContent(navController) {
+                    isAuthorization()
+                } },
                 bottomBar = {
                     Row(
                         horizontalArrangement = Arrangement.Center,
@@ -90,7 +92,7 @@ fun AuthorizationScreen(navController: NavController, onAuthorization: () -> Uni
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AuthorizationContent(navController: NavController, onAuthorization: () -> Unit) {
+fun AuthorizationContent(navController: NavController, isAuthorization: () -> Unit) {
     val context = LocalContext.current
     val viewModelLogin: AuthorizationViewModel = AuthorizationViewModel(context)
     val bringIntoViewRequester = BringIntoViewRequester()
@@ -109,6 +111,10 @@ fun AuthorizationContent(navController: NavController, onAuthorization: () -> Un
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        PhoneTextField(viewModelLogin, bringIntoViewRequester)
+
+        Spacer(modifier = Modifier.height(20.dp))
+
         PasswordTextField("Пароль", viewModelLogin, bringIntoViewRequester)
 
         Spacer(modifier = Modifier.height(11.dp))
@@ -123,15 +129,11 @@ fun AuthorizationContent(navController: NavController, onAuthorization: () -> Un
             modifier = Modifier.fillMaxWidth()
                 .bringIntoViewRequester(bringIntoViewRequester),
             onClick = {
-//                coroutineScope.launch {
-//                    viewModelLogin.loginUser()
-//
-//                    if(viewModelLogin.loginStatusLiveData.value == true) {
-//                        onAuthorization()
-//                    }
-//                    else
-//                        isTextVisible = true
-//                }
+                coroutineScope.launch {
+                    viewModelLogin.login()
+                }
+
+                isAuthorization()
             },
             content = { Text(text = "Войти", fontSize = 18.sp) }
         )
@@ -167,6 +169,34 @@ fun LoginTextField(viewModelLogin: AuthorizationViewModel, bringIntoViewRequeste
             },
         placeholder = { Text("Логин") },
         label = { Text("Логин") },
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {focusManager.clearFocus()}
+        )
+    )
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun PhoneTextField(viewModelLogin: AuthorizationViewModel, bringIntoViewRequester: BringIntoViewRequester ) {
+    val coroutineScope = rememberCoroutineScope()
+    val focusManager = LocalFocusManager.current
+    TextField(
+        value = viewModelLogin.phone.value,
+        onValueChange = { newText -> viewModelLogin.phone.value = newText },
+        maxLines = 1,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .onFocusEvent { event ->
+                if (event.isFocused) {
+                    coroutineScope.launch {
+                        bringIntoViewRequester.bringIntoView()
+                    }
+                }
+            },
+        placeholder = { Text("Номер телефона") },
+        label = { Text("Номер телефона") },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions(
             onDone = {focusManager.clearFocus()}

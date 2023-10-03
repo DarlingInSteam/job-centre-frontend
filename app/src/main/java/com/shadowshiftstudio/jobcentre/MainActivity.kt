@@ -28,6 +28,7 @@ import com.shadowshiftstudio.jobcentre.view.app.authentication.view.Authorizatio
 import com.shadowshiftstudio.jobcentre.view.app.theme.JobCentreTheme
 import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_background
 import com.shadowshiftstudio.jobcentre.view.employer.view.bottomnav.ConstantsEmployer
+import com.shadowshiftstudio.jobcentre.view.employer.view.main_screens.Home
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,10 +38,17 @@ class MainActivity : ComponentActivity() {
 
             JobCentreTheme(dynamicColor = false, darkTheme = true) {
                 val navController = rememberNavController()
+                var isAuthorization = false
 
                 Surface {
-                    AuthorizationScreen(navController = navController) {
+                    var isLogin = SecureStore.getIsLogin()
 
+                    if(isLogin == "1" || isAuthorization) {
+                        Home()
+                    } else {
+                        AuthorizationScreen(navController = navController) {
+                            isAuthorization = true
+                        }
                     }
                 }
             }

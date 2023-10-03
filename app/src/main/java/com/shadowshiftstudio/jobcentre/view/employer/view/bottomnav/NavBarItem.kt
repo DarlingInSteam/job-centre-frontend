@@ -17,17 +17,17 @@ object ConstantsEmployer {
         NavBarItem(
             title = "Главная",
             icon = Icons.Default.Home,
-            route = "catalog"
+            route = "home"
         ),
         NavBarItem(
             title = "О компании",
             icon = Icons.Filled.Info,
-            route = "tops"
+            route = "company"
         ),
         NavBarItem(
             title = "Мои вакансии",
             icon = Icons.Default.ListAlt,
-            route = "my"
+            route = "vacancies"
         ),
         NavBarItem(
             title = "Профиль",
