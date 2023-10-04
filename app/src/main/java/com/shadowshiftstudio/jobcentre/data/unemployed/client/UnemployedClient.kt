@@ -1,18 +1,15 @@
-package com.shadowshiftstudio.jobcentre.data.employer.client
+package com.shadowshiftstudio.jobcentre.data.unemployed.client
 
-import android.util.Log
 import com.shadowshiftstudio.jobcentre.data.app.secure_data.SecureStore
 import com.shadowshiftstudio.jobcentre.data.authentication.api_request.AuthenticationRequest
-import com.shadowshiftstudio.jobcentre.data.unemployed.service.IUnemployedService
 import com.shadowshiftstudio.jobcentre.domain.authentication.use_case.AuthenticationUseCase
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import java.net.HttpURLConnection
 
-object EmployerClient {
+object UnemployedClient {
     private val authenticationUseCase: AuthenticationUseCase =
         AuthenticationUseCase(AuthenticationRequest())
 
@@ -52,6 +49,4 @@ object EmployerClient {
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()
-
-    val unemployedService: IUnemployedService = retrofit.create(IUnemployedService::class.java)
 }

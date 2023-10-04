@@ -25,7 +25,7 @@ object ConstantsEmployer {
             route = "company"
         ),
         NavBarItem(
-            title = "Мои вакансии",
+            title = "Вакансии",
             icon = Icons.Default.ListAlt,
             route = "vacancies"
         ),

@@ -10,6 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,7 +45,17 @@ class MainActivity : ComponentActivity() {
                     var isLogin = SecureStore.getIsLogin()
 
                     if(isLogin == "1" || isAuthorization) {
-                        Home()
+                        Scaffold(
+                            bottomBar = {
+                                BottomNavigationBarEmployer(navHostController = navController)
+                            },
+                            content = { paddingValues ->
+                                NavHostContainerEmployer(
+                                    navHostController = navController,
+                                    paddingValues = paddingValues
+                                )
+                            }
+                        )
                     } else {
                         AuthorizationScreen(navController = navController) {
                             isAuthorization = true
@@ -68,6 +79,18 @@ fun NavHostContainerEmployer(
 
         builder = {
             composable("home") {
+                Home()
+            }
+
+            composable("company") {
+
+            }
+
+            composable("profile") {
+
+            }
+
+            composable("vacancies") {
 
             }
         }
