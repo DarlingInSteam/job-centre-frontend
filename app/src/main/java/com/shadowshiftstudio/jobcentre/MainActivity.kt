@@ -30,6 +30,7 @@ import com.shadowshiftstudio.jobcentre.view.app.theme.JobCentreTheme
 import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_background
 import com.shadowshiftstudio.jobcentre.view.employer.view.bottomnav.ConstantsEmployer
 import com.shadowshiftstudio.jobcentre.view.employer.view.main_screens.Home
+import com.shadowshiftstudio.jobcentre.view.employer.view_model.HomeViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +73,8 @@ fun NavHostContainerEmployer(
     navHostController: NavHostController,
     paddingValues: PaddingValues,
 ) {
+    val homeViewModel = HomeViewModel(LocalContext.current)
+
     NavHost(
         navController = navHostController,
         startDestination = "home",
@@ -79,7 +82,7 @@ fun NavHostContainerEmployer(
 
         builder = {
             composable("home") {
-                Home()
+                Home(homeViewModel)
             }
 
             composable("company") {
