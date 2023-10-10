@@ -13,5 +13,6 @@ data class Unemployed (
     val educationDocumentData: String,
     val speciality: String,
     val workExperience: Int,
-    val registrationDate: Date
+    val registrationDate: Date,
+    val abilities: List<Ability>
 )
