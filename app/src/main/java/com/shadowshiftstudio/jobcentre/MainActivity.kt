@@ -28,6 +28,7 @@ import com.shadowshiftstudio.jobcentre.data.app.secure_data.SecureStore
 import com.shadowshiftstudio.jobcentre.view.app.authentication.view.AuthorizationScreen
 import com.shadowshiftstudio.jobcentre.view.app.theme.JobCentreTheme
 import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_dark_background
+import com.shadowshiftstudio.jobcentre.view.app.theme.md_theme_light_background
 import com.shadowshiftstudio.jobcentre.view.employer.view.bottomnav.ConstantsEmployer
 import com.shadowshiftstudio.jobcentre.view.employer.view.main_screens.Home
 import com.shadowshiftstudio.jobcentre.view.employer.view_model.HomeViewModel
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SecureStore.initialize(LocalContext.current)
 
-            JobCentreTheme(dynamicColor = false, darkTheme = true) {
+            JobCentreTheme(dynamicColor = true, darkTheme = false) {
                 val navController = rememberNavController()
                 var isAuthorization = false
 
@@ -103,7 +104,7 @@ fun NavHostContainerEmployer(
 @Composable
 fun BottomNavigationBarEmployer(navHostController: NavHostController) {
     NavigationBar(
-        containerColor = md_theme_dark_background
+        containerColor = md_theme_light_background
     ) {
         val navBackStackEntry by navHostController.currentBackStackEntryAsState()
 
