@@ -2,7 +2,7 @@ package com.shadowshiftstudio.jobcentre.data.app.secure_data
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.shadowshiftstudio.jobcentre.model.enum.Role
+import com.shadowshiftstudio.jobcentre.domain.model.enum.Role
 
 object SecureStore {
     private lateinit var preferences: SharedPreferences

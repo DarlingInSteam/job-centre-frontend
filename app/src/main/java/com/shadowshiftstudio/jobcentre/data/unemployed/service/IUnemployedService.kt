@@ -1,6 +1,6 @@
 package com.shadowshiftstudio.jobcentre.data.unemployed.service
 
-import com.shadowshiftstudio.jobcentre.model.entity.Unemployed
+import com.shadowshiftstudio.jobcentre.domain.model.entity.Unemployed
 import retrofit2.Call
 import retrofit2.http.GET
 

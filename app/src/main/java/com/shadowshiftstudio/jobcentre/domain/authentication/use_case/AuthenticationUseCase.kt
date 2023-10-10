@@ -1,9 +1,9 @@
 package com.shadowshiftstudio.jobcentre.domain.authentication.use_case
 
 import com.shadowshiftstudio.jobcentre.domain.authentication.repository.IAuthenticationRepository
-import com.shadowshiftstudio.jobcentre.model.request.AuthenticationRequest
-import com.shadowshiftstudio.jobcentre.model.request.RegisterRequest
-import com.shadowshiftstudio.jobcentre.model.response.AuthenticationResponse
+import com.shadowshiftstudio.jobcentre.domain.model.request.AuthenticationRequest
+import com.shadowshiftstudio.jobcentre.domain.model.request.RegisterRequest
+import com.shadowshiftstudio.jobcentre.domain.model.response.AuthenticationResponse
 
 class AuthenticationUseCase(private val authenticationRepository: IAuthenticationRepository) {
     suspend fun registerUser(registerRequest: RegisterRequest): Boolean {

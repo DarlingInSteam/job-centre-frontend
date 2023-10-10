@@ -4,10 +4,10 @@ import android.util.Log
 import com.shadowshiftstudio.jobcentre.data.app.secure_data.SecureStore
 import com.shadowshiftstudio.jobcentre.data.authentication.client.AuthenticationClient
 import com.shadowshiftstudio.jobcentre.domain.authentication.repository.IAuthenticationRepository
-import com.shadowshiftstudio.jobcentre.model.request.AuthenticationRequest
-import com.shadowshiftstudio.jobcentre.model.request.RefreshTokenRequest
-import com.shadowshiftstudio.jobcentre.model.request.RegisterRequest
-import com.shadowshiftstudio.jobcentre.model.response.AuthenticationResponse
+import com.shadowshiftstudio.jobcentre.domain.model.request.AuthenticationRequest
+import com.shadowshiftstudio.jobcentre.domain.model.request.RefreshTokenRequest
+import com.shadowshiftstudio.jobcentre.domain.model.request.RegisterRequest
+import com.shadowshiftstudio.jobcentre.domain.model.response.AuthenticationResponse
 import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Call
 import retrofit2.Callback

@@ -4,7 +4,7 @@ import android.util.Log
 import com.shadowshiftstudio.jobcentre.data.authentication.client.AuthenticationClient
 import com.shadowshiftstudio.jobcentre.data.employer.client.EmployerClient
 import com.shadowshiftstudio.jobcentre.domain.unemployed.repository.IUnemployedRepository
-import com.shadowshiftstudio.jobcentre.model.entity.Unemployed
+import com.shadowshiftstudio.jobcentre.domain.model.entity.Unemployed
 import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Call
 import retrofit2.Callback

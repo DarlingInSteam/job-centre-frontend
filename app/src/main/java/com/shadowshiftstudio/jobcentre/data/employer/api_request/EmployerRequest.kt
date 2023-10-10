@@ -3,9 +3,9 @@ package com.shadowshiftstudio.jobcentre.data.employer.api_request
 import android.util.Log
 import com.shadowshiftstudio.jobcentre.data.authentication.client.AuthenticationClient
 import com.shadowshiftstudio.jobcentre.domain.employer.repository.IEmployerRepository
-import com.shadowshiftstudio.jobcentre.model.entity.Employer
-import com.shadowshiftstudio.jobcentre.model.request.CreateEmployerRequest
-import com.shadowshiftstudio.jobcentre.model.response.AuthenticationResponse
+import com.shadowshiftstudio.jobcentre.domain.model.entity.Employer
+import com.shadowshiftstudio.jobcentre.domain.model.request.CreateEmployerRequest
+import com.shadowshiftstudio.jobcentre.domain.model.response.AuthenticationResponse
 import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Call
 import retrofit2.Callback
