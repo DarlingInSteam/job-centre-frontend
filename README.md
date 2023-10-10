@@ -41,3 +41,11 @@ To run the application locally, follow these steps:
 1. Clone this repository.
 2. Open the project in Android Studio.
 3. Build and run the application on an emulator or physical device.
+
+## Contributing
+
+Contributions to the development of this application are welcome. If you would like to contribute, please follow the [Contribution Guidelines](https://github.com/DarlingInSteam/job-centre-frontend/blob/master/CODE_OF_CONDUCT.md).
+
+## License
+
+This project is licensed under the [MIT License](https://github.com/DarlingInSteam/job-centre-frontend/blob/master/LICENSE).
