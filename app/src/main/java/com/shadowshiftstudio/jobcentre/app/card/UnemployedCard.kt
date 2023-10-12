@@ -14,7 +14,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -22,12 +21,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.shadowshiftstudio.jobcentre.app.employer.view_model.HomeViewModel
 import com.shadowshiftstudio.jobcentre.domain.model.entity.Ability
 import com.shadowshiftstudio.jobcentre.domain.model.entity.Unemployed
 import com.shadowshiftstudio.jobcentre.domain.model.enum.getRussianEducationLevel
 
 @Composable
-fun UnemployedCard(unemployed: Unemployed) {
+fun UnemployedCard(unemployed: Unemployed, navController: NavController, viewModel: HomeViewModel) {
 
     val experienceText = when (val experience = unemployed.workExperience) {
         1 -> "1 год"
@@ -45,7 +46,10 @@ fun UnemployedCard(unemployed: Unemployed) {
 
     Card(
         modifier = Modifier
-            .clickable { }
+            .clickable {
+                viewModel.unemployedFullScreen = unemployed
+                navController.navigate("unemployed_screen")
+            }
             .fillMaxWidth()
     ) {
         Column(
@@ -55,30 +59,24 @@ fun UnemployedCard(unemployed: Unemployed) {
         ) {
             Text(
                 text = unemployed.fullName,
-                color = Color.Black,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp
             )
             Text(
                 text = unemployed.speciality,
-                color = Color.Black,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = "Опыт работы: $experienceText",
-                color = Color.Black
             )
             Text(
                 text = "Возраст: $ageText",
-                color = Color.Black
             )
             Text(
                 text = "Уровень образования: ${getRussianEducationLevel(unemployed.educationLevel)}",
-                color = Color.Black
             )
             Text(
                 text = "Образовательное учреждение: ${unemployed.educationalInstitution}",
-                color = Color.Black
             )
 
             Spacer(modifier = Modifier.height(5.dp))
@@ -108,7 +106,6 @@ fun Abilities(abilities: List<Ability>) {
             abilities.forEach { word ->
                 Text(
                     word.text,
-                    color = Color.Black,
                     modifier = Modifier
                         .clickable { },
                     textDecoration = TextDecoration.Underline,

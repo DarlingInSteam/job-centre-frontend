@@ -25,26 +25,39 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.shadowshiftstudio.jobcentre.domain.model.entity.Unemployed
 import com.shadowshiftstudio.jobcentre.app.card.UnemployedCard
+import com.shadowshiftstudio.jobcentre.app.employer.view.unemployed_screens.UnemployedScreen
 import com.shadowshiftstudio.jobcentre.app.employer.view_model.HomeViewModel
 
 @Composable
 fun Home(
     viewModel: HomeViewModel
 ) {
+    val navController = rememberNavController()
+
     LaunchedEffect(viewModel) {
         viewModel.getAllUnemployed()
     }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(23.dp),
-    ) {
-        HomeButtons({}, {})
-        Spacer(modifier = Modifier.height(20.dp))
-        UnemployedList(viewModel = viewModel)
+    NavHost(navController = navController, startDestination = "home") {
+        composable("home") {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(23.dp),
+            ) {
+                HomeButtons({}, {})
+                Spacer(modifier = Modifier.height(20.dp))
+                UnemployedList(viewModel = viewModel, navController)
+            }
+        }
+        composable("unemployed_screen") {
+            UnemployedScreen(navController, viewModel.unemployedFullScreen)
+        }
     }
 }
 
@@ -100,7 +113,7 @@ fun HomeButtons(
 }
 
 @Composable
-fun UnemployedList(viewModel: HomeViewModel) {
+fun UnemployedList(viewModel: HomeViewModel, navController: NavController) {
     val allUnemployedState = remember { mutableStateOf<List<Unemployed>?>(null) }
 
     val allUnemployedObserver = Observer<List<Unemployed>> { allUnemployed ->
@@ -121,7 +134,7 @@ fun UnemployedList(viewModel: HomeViewModel) {
         content = {
             allUnemployedState.value?.let {
                 items(count = it.size) { index ->
-                    UnemployedCard(unemployed = allUnemployedState.value!![index])
+                    UnemployedCard(unemployed = allUnemployedState.value!![index], navController, viewModel)
                     Spacer(modifier = Modifier.height(20.dp))
                 }
             }

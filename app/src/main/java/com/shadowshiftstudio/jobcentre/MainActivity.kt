@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SecureStore.initialize(LocalContext.current)
 
-            JobCentreTheme(dynamicColor = true, darkTheme = false) {
+            JobCentreTheme(dynamicColor = true, darkTheme = true) {
                 val navController = rememberNavController()
                 var isAuthorization = false
 
@@ -99,7 +99,6 @@ fun NavHostContainerEmployer(
 @Composable
 fun BottomNavigationBarEmployer(navHostController: NavHostController) {
     NavigationBar(
-        containerColor = md_theme_light_background
     ) {
         val navBackStackEntry by navHostController.currentBackStackEntryAsState()
 
