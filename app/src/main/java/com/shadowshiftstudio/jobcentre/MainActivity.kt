@@ -56,6 +56,7 @@ class MainActivity : ComponentActivity() {
                     } else {
                         AuthorizationScreen(navController = navController) {
                             isAuthorization = true
+                            isLogin = "1"
                         }
                     }
                 }

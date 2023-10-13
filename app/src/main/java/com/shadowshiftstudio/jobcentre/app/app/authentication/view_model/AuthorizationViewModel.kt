@@ -29,6 +29,6 @@ class AuthorizationViewModel(private val context: Context): ViewModel() {
                     password.value
                 )
             var status = authenticationUseCase.loginUser(authenticationRequest)
-        }
+        }.join()
     }
 }
