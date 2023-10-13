@@ -26,7 +26,9 @@ class HomeViewModel(private val context: Context): ViewModel() {
         "",
         0,
         Date(123),
-        listOf<Ability>()
+        listOf<Ability>(),
+        "",
+        ""
     )
 
     private val unemployed: UnemployedUseCase =

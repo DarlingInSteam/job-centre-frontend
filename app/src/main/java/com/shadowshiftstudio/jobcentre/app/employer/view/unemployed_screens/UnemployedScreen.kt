@@ -10,9 +10,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Shapes
@@ -28,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.shadowshiftstudio.jobcentre.app.card.Abilities
 import com.shadowshiftstudio.jobcentre.domain.model.entity.Unemployed
 import com.shadowshiftstudio.jobcentre.domain.model.enum.getRussianEducationLevel
 
@@ -36,6 +41,8 @@ fun UnemployedScreen(
     navController: NavController,
     unemployed: Unemployed
 ) {
+    val state = rememberScrollState()
+
     val experienceText = when (val experience = unemployed.workExperience) {
         1 -> "1 год"
         in 2..4 -> "$experience года"
@@ -50,7 +57,11 @@ fun UnemployedScreen(
         else -> "$age год"
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(state)
+    ) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
@@ -59,7 +70,7 @@ fun UnemployedScreen(
                         .width(28.dp)
                 )
             }
-            Text(text = "Настройки профиля", fontSize = 18.sp)
+            Text(text = "Просмотр профиля", fontSize = 18.sp)
         }
         Spacer(modifier = Modifier.height(8.dp))
         Row(
@@ -96,15 +107,20 @@ fun UnemployedScreen(
                 )
             }
             AsyncImage(
-                model = "https://www.meme-arsenal.com/memes/1f1f9fa0355dfb137689834296f58467.jpg",
+                model = unemployed.unemployedPhoto ?: "https://nusho.com.ua/ckeditor-uploads/1-4.jpg",
                 contentDescription = "Photo",
                 modifier = Modifier
-                    .size(height = 120.dp, width = 80.dp),
+                    .size(height = 120.dp, width = 80.dp)
+                    .clip(RoundedCornerShape(10.dp)),
                 contentScale = ContentScale.Crop,
             )
         }
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(15.dp))
+
+        Divider(thickness = 3.dp)
+
+        Spacer(modifier = Modifier.height(15.dp))
 
         Column(
             modifier = Modifier
@@ -137,8 +153,38 @@ fun UnemployedScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(start = 23.dp, end = 23.dp)
         ) {
+            Text(text = "Ключевые навыки", fontWeight = FontWeight.Bold)
 
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Abilities(abilities = unemployed.abilities)
+        }
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 23.dp, end = 23.dp)
+        ) {
+            Text(text = "Обо мне", fontWeight = FontWeight.Bold)
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(text = unemployed.aboutMe ?: "На данный момент информация не заполнялась.")
+        }
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 23.dp)
+        ) {
+            Text(text = "Пригласить на вакансию")
         }
     }
 }
