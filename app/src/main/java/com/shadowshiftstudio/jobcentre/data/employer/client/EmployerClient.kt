@@ -4,6 +4,7 @@ import android.util.Log
 import com.shadowshiftstudio.jobcentre.data.app.secure_data.SecureStore
 import com.shadowshiftstudio.jobcentre.data.authentication.api_request.AuthenticationRequest
 import com.shadowshiftstudio.jobcentre.data.employer.service.IEmployerService
+import com.shadowshiftstudio.jobcentre.data.employer.service.IVacancyService
 import com.shadowshiftstudio.jobcentre.data.unemployed.service.IUnemployedService
 import com.shadowshiftstudio.jobcentre.domain.authentication.use_case.AuthenticationUseCase
 import kotlinx.coroutines.runBlocking
@@ -57,4 +58,5 @@ object EmployerClient {
 
     val unemployedService: IUnemployedService = retrofit.create(IUnemployedService::class.java)
     val employerService: IEmployerService = retrofit.create(IEmployerService::class.java)
+    val vacancyService: IVacancyService = retrofit.create(IVacancyService::class.java)
 }

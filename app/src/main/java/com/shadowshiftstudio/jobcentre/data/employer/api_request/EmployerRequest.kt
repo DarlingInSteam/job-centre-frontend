@@ -5,9 +5,8 @@ import com.shadowshiftstudio.jobcentre.data.authentication.client.Authentication
 import com.shadowshiftstudio.jobcentre.data.employer.client.EmployerClient
 import com.shadowshiftstudio.jobcentre.domain.employer.repository.IEmployerRepository
 import com.shadowshiftstudio.jobcentre.domain.model.entity.Employer
-import com.shadowshiftstudio.jobcentre.domain.model.entity.JobVacancies
+import com.shadowshiftstudio.jobcentre.domain.model.entity.JobVacancy
 import com.shadowshiftstudio.jobcentre.domain.model.request.CreateEmployerRequest
-import com.shadowshiftstudio.jobcentre.domain.model.response.AuthenticationResponse
 import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Call
 import retrofit2.Callback
@@ -51,7 +50,7 @@ class EmployerRequest: IEmployerRepository {
 
     override suspend fun getEmployerByUsername(username: String): Employer {
         val backendService = EmployerClient.employerService
-        val buff = listOf<JobVacancies>()
+        val buff = listOf<JobVacancy>()
         val voidEmployer = Employer(
             0,
             "",
@@ -94,7 +93,7 @@ class EmployerRequest: IEmployerRepository {
 
     override suspend fun addAboutCompany(aboutCompany: String, id: Long): String {
         val backendService = EmployerClient.employerService
-        val buff = listOf<JobVacancies>()
+        val buff = listOf<JobVacancy>()
         val voidResponse = ""
 
         return suspendCancellableCoroutine { continuation ->

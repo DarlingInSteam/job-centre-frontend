@@ -1,6 +1,6 @@
 package com.shadowshiftstudio.jobcentre.domain.model.entity
 
-data class JobVacancies(
+data class JobVacancy(
     val id: Long,
     val jobType: String,
     val jobTitle: String,
