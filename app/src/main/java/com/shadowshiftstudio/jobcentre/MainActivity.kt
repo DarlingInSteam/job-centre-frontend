@@ -25,7 +25,9 @@ import com.shadowshiftstudio.jobcentre.app.app.authentication.view.Authorization
 import com.shadowshiftstudio.jobcentre.app.app.theme.JobCentreTheme
 import com.shadowshiftstudio.jobcentre.app.app.theme.md_theme_light_background
 import com.shadowshiftstudio.jobcentre.app.employer.view.bottomnav.ConstantsEmployer
+import com.shadowshiftstudio.jobcentre.app.employer.view.main_screens.Company
 import com.shadowshiftstudio.jobcentre.app.employer.view.main_screens.Home
+import com.shadowshiftstudio.jobcentre.app.employer.view_model.CompanyViewModel
 import com.shadowshiftstudio.jobcentre.app.employer.view_model.HomeViewModel
 
 class MainActivity : ComponentActivity() {
@@ -71,6 +73,7 @@ fun NavHostContainerEmployer(
     paddingValues: PaddingValues,
 ) {
     val homeViewModel = HomeViewModel(LocalContext.current)
+    val companyViewModel = CompanyViewModel(LocalContext.current)
 
     NavHost(
         navController = navHostController,
@@ -83,7 +86,7 @@ fun NavHostContainerEmployer(
             }
 
             composable("company") {
-
+                Company(companyViewModel)
             }
 
             composable("profile") {

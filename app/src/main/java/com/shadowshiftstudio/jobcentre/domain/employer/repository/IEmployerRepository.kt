@@ -6,4 +6,5 @@ import com.shadowshiftstudio.jobcentre.domain.model.request.CreateEmployerReques
 interface IEmployerRepository {
     suspend fun createEmployer(request: CreateEmployerRequest): Boolean
     suspend fun getEmployerByUsername(username: String): Employer
+    suspend fun addAboutCompany(aboutCompany: String, id: Long): String
 }

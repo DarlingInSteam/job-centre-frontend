@@ -12,4 +12,8 @@ class EmployerUseCase(private val repository: IEmployerRepository) {
     suspend fun getEmployerByUsername(username: String): Employer {
         return repository.getEmployerByUsername(username)
     }
+
+    suspend fun addAboutCompany(aboutCompany: String, id: Long): String {
+        return repository.addAboutCompany(aboutCompany, id)
+    }
 }

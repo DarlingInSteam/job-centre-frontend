@@ -3,6 +3,7 @@ package com.shadowshiftstudio.jobcentre.data.employer.client
 import android.util.Log
 import com.shadowshiftstudio.jobcentre.data.app.secure_data.SecureStore
 import com.shadowshiftstudio.jobcentre.data.authentication.api_request.AuthenticationRequest
+import com.shadowshiftstudio.jobcentre.data.employer.service.IEmployerService
 import com.shadowshiftstudio.jobcentre.data.unemployed.service.IUnemployedService
 import com.shadowshiftstudio.jobcentre.domain.authentication.use_case.AuthenticationUseCase
 import kotlinx.coroutines.runBlocking
@@ -47,11 +48,13 @@ object EmployerClient {
             }
             .build()
 
-    private val retrofit: Retrofit = Retrofit.Builder()
+    private val retrofit: Retrofit = Retrofit
+        .Builder()
         .baseUrl("http://192.168.0.7:8080")
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()
 
     val unemployedService: IUnemployedService = retrofit.create(IUnemployedService::class.java)
+    val employerService: IEmployerService = retrofit.create(IEmployerService::class.java)
 }
