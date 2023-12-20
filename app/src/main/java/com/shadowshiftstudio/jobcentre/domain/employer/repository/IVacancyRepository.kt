@@ -5,7 +5,7 @@ import com.shadowshiftstudio.jobcentre.domain.model.request.CreateJobVacancyRequ
 
 interface IVacancyRepository {
     suspend fun createVacancy(request: CreateJobVacancyRequest): String
-    suspend fun getVacancy(jobTitle: String): JobVacancy
+    suspend fun getVacancy(job_id: Long): JobVacancy?
     suspend fun applyVacancyUnemployed(vacancyId: Long, username: String): String
     suspend fun archivedVacancy(vacancyId: Long): String
     suspend fun updateVacancy(request: CreateJobVacancyRequest, vacancyId: Long): String

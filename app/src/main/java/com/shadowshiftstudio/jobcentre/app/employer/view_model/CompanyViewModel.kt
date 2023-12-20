@@ -31,4 +31,28 @@ class CompanyViewModel(private val context: Context): ViewModel() {
             getEmployer()
         }.join()
     }
+
+    suspend fun addNewName(newName: String, id: Long) {
+        viewModelScope.launch {
+            val result = employerUseCase.addNewName(newName, id)
+
+            getEmployer()
+        }.join()
+    }
+
+    suspend fun addNewAddress(newAddress: String, id: Long) {
+        viewModelScope.launch {
+            val result = employerUseCase.addNewAddress(newAddress, id)
+
+            getEmployer()
+        }.join()
+    }
+
+    suspend fun addPhoto(photo: String, id: Long) {
+        viewModelScope.launch {
+            val result = employerUseCase.addPhoto(photo, id)
+
+            getEmployer()
+        }.join()
+    }
 }

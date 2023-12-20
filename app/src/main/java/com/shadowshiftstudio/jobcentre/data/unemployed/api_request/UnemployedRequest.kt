@@ -16,6 +16,39 @@ class UnemployedRequest: IUnemployedRepository {
         TODO("Not yet implemented")
     }
 
+    override suspend fun getUnemployedById(unemployedId: Long): Unemployed? {
+        val backendService = EmployerClient.unemployedService
+
+        return suspendCancellableCoroutine { continuation ->
+            val call = backendService.getUnemployedId(unemployedId)
+
+            call.enqueue(object : Callback<Unemployed> {
+                override fun onResponse(
+                    call: Call<Unemployed>,
+                    response: Response<Unemployed>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+
+                        if (responseBody != null) {
+                            continuation.resume(responseBody)
+                        } else {
+                            Log.e("Parse error", "")
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<Unemployed>, t: Throwable) {
+                    Log.e("Network client error", t.message ?: "HTTP client failed to connect")
+                }
+            })
+
+            continuation.invokeOnCancellation {
+                call.cancel()
+            }
+        }
+    }
+
     override suspend fun getAllUnemployed(): List<Unemployed> {
         val backendService = EmployerClient.unemployedService
         val voidReturn = listOf<Unemployed>()

@@ -10,4 +10,8 @@ class UnemployedUseCase(private val unemployedRepository: IUnemployedRepository)
     suspend fun getAllUnemployed(): List<Unemployed> {
         return unemployedRepository.getAllUnemployed()
     }
+
+    suspend fun getUnemployedById(unemployedId: Long): Unemployed? {
+        return unemployedRepository.getUnemployedById(unemployedId)
+    }
 }

@@ -13,8 +13,8 @@ interface IVacancyService {
     @POST("/job_vacancy/create")
     fun createJobVacancy(@Body request: CreateJobVacancyRequest): Call<String>
 
-    @GET("/job_vacancy/{job_title}")
-    fun getJobVacancy(@Path("job_title") jobTitle: String): Call<JobVacancy>
+    @GET("/job_vacancy/{job_id}")
+    fun getJobVacancy(@Path("job_id") job_id: Long): Call<JobVacancy?>
 
     @POST("/job_vacancy/apply_vacancy")
     fun applyVacancyUnemployed(@Query("id") id: Long, @Query("username") username: String)

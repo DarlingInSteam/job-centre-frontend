@@ -90,8 +90,8 @@ fun CompanyInfo(
             Spacer(modifier = Modifier.height(8.dp))
 
             Row {
-                employer.value?.let { EditableTextField(it.employerName, {}, {},
-                    employer.value!!, viewModel) }
+                employer.value?.let { it.employerName?.let { it1 -> EditableTextField(it1, {}, {},
+                    employer.value!!, viewModel, 1) } }
             }
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -103,8 +103,8 @@ fun CompanyInfo(
             Spacer(modifier = Modifier.height(8.dp))
 
             Row {
-                employer.value?.let { EditableTextField(it.address, {}, {},
-                    employer.value!!, viewModel) }
+                employer.value?.let { it.address?.let { it1 -> EditableTextField(it1, {}, {},
+                    employer.value!!, viewModel, 2) } }
             }
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -117,7 +117,20 @@ fun CompanyInfo(
 
             Row {
                 employer.value?.let { it.aboutCompany?.let { it1 -> EditableTextField(it1, {}, {},
-                    employer.value!!, viewModel) } }
+                    employer.value!!, viewModel, 3) } }
+            }
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Row {
+                Text(text = "Ссылка на фотографию", fontWeight = FontWeight.Bold)
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row {
+                employer.value?.let { it.companyPhoto?.let { it1 -> EditableTextField(it1, {}, {},
+                    employer.value!!, viewModel, 4) } }
             }
 
             Spacer(modifier = Modifier.height(40.dp))
@@ -146,7 +159,8 @@ fun EditableTextField(
     onTextChanged: (String) -> Unit,
     onEditClick: () -> Unit,
     employer: Employer,
-    viewModel: CompanyViewModel
+    viewModel: CompanyViewModel,
+    editIcon: Int
 ) {
     var isEditing by remember { mutableStateOf(false) }
     var editableText by remember { mutableStateOf(text) }
@@ -169,8 +183,28 @@ fun EditableTextField(
                     isEditing = false
                     onTextChanged(editableText)
 
-                    coroutineScope.launch {
-                        viewModel.addAboutCompany(editableText, employer.id)
+                    if (editIcon == 1) {
+                        coroutineScope.launch {
+                            viewModel.addNewName(editableText, employer.id)
+                        }
+                    }
+
+                    if (editIcon == 2) {
+                        coroutineScope.launch {
+                            viewModel.addNewAddress(editableText, employer.id)
+                        }
+                    }
+
+                    if (editIcon == 3) {
+                        coroutineScope.launch {
+                            viewModel.addAboutCompany(editableText, employer.id)
+                        }
+                    }
+
+                    if (editIcon == 4) {
+                        coroutineScope.launch {
+                            viewModel.addPhoto(editableText, employer.id)
+                        }
                     }
                 }
             ) {

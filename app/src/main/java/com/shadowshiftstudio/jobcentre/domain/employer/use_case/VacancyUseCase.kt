@@ -9,8 +9,8 @@ class VacancyUseCase(private val repository: IVacancyRepository) {
         return repository.createVacancy(request)
     }
 
-    suspend fun getVacancy(jobTitle: String): JobVacancy {
-        return repository.getVacancy(jobTitle)
+    suspend fun getVacancy(job_id: Long): JobVacancy? {
+        return repository.getVacancy(job_id)
     }
 
     suspend fun applyVacancyUnemployed(vacancyId: Long, username: String): String {

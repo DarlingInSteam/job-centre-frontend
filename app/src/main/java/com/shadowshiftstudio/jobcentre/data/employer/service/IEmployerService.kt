@@ -4,6 +4,7 @@ import com.shadowshiftstudio.jobcentre.domain.model.entity.Employer
 import com.shadowshiftstudio.jobcentre.domain.model.request.CreateEmployerRequest
 import com.shadowshiftstudio.jobcentre.domain.model.request.RegisterRequest
 import com.shadowshiftstudio.jobcentre.domain.model.response.AuthenticationResponse
+import com.shadowshiftstudio.jobcentre.domain.model.response.GetJobVacancyResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -19,4 +20,17 @@ interface IEmployerService {
 
     @POST("/employer/add_about_company")
     fun addAboutCompany(@Query("aboutCompany") aboutCompany: String, @Query("id") id: Long): Call<String>
+
+    @POST("/employer/add_new_name")
+    fun addNewName(@Query("newName") newName: String, @Query("id") id: Long): Call<String>
+
+    @POST("/employer/add_new_address")
+    fun addNewAddress(@Query("newAddress") newAddress: String, @Query("id") id: Long): Call<String>
+
+    @POST("/employer/add_photo")
+    fun addPhoto(@Query("photo") photo: String, @Query("id") id: Long): Call<String>
+
+    @GET("/employer/get_vacancies")
+    fun getVacancies(@Query("username") username: String): Call<List<GetJobVacancyResponse>>
+
 }
