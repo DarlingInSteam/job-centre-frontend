@@ -4,6 +4,7 @@ import com.shadowshiftstudio.jobcentre.domain.model.enum.EducationLevel
 
 data class CreateJobRequirementsRequest(
     val educationLevel: EducationLevel,
-    val ageRange: List<Int>,
+    val ageRangeUpper: Int,
+    val ageRangeLower: Int,
     val workExperience: Int
 )

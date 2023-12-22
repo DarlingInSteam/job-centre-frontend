@@ -247,7 +247,7 @@ class EmployerRequest: IEmployerRepository {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
                         if (responseBody != null) {
-                            continuation.resume(voidResponse)
+                            continuation.resume(responseBody)
                         } else {
                             Log.e("Response Error", "Response body is null")
                             continuation.resume(voidResponse)

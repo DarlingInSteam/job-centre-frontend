@@ -5,5 +5,5 @@ import com.shadowshiftstudio.jobcentre.domain.model.entity.JobVacancy
 
 data class GetJobVacancyResponse (
     val jobVacancy: JobVacancy,
-    val jobRequirements: JobRequirements
+    val jobRequirement: JobRequirements
 )
