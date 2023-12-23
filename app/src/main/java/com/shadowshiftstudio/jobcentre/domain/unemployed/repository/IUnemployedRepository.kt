@@ -6,4 +6,5 @@ interface IUnemployedRepository {
     suspend fun getUnemployedByUsername(username: String): Unemployed
     suspend fun getUnemployedById(unemployedId: Long): Unemployed?
     suspend fun getAllUnemployed(): List<Unemployed>
+    suspend fun applyUnemployed(unemployedId: Long, vacancyId: Long): String
 }

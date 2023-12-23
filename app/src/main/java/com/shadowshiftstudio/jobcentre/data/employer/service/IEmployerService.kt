@@ -1,9 +1,11 @@
 package com.shadowshiftstudio.jobcentre.data.employer.service
 
 import com.shadowshiftstudio.jobcentre.domain.model.entity.Employer
+import com.shadowshiftstudio.jobcentre.domain.model.request.AcceptUnemployedRequest
 import com.shadowshiftstudio.jobcentre.domain.model.request.CreateEmployerRequest
 import com.shadowshiftstudio.jobcentre.domain.model.request.RegisterRequest
 import com.shadowshiftstudio.jobcentre.domain.model.response.AuthenticationResponse
+import com.shadowshiftstudio.jobcentre.domain.model.response.GetAppliesForVacancies
 import com.shadowshiftstudio.jobcentre.domain.model.response.GetJobVacancyResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -33,4 +35,12 @@ interface IEmployerService {
     @GET("/employer/get_vacancies")
     fun getVacancies(@Query("username") username: String): Call<List<GetJobVacancyResponse>>
 
+    @GET("/employer/get_applies_vacancies")
+    fun getAppliesVacancy(@Query("username") username: String): Call<List<GetAppliesForVacancies>>
+
+    @POST("employer/accept_unemployed")
+    fun acceptUnemployed(@Body request: AcceptUnemployedRequest): Call<String>
+
+    @POST("employer/reject_unemployed")
+    fun rejectUnemployed(@Body request: AcceptUnemployedRequest): Call<String>
 }

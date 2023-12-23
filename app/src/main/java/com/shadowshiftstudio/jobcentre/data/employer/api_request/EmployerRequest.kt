@@ -6,7 +6,9 @@ import com.shadowshiftstudio.jobcentre.data.employer.client.EmployerClient
 import com.shadowshiftstudio.jobcentre.domain.employer.repository.IEmployerRepository
 import com.shadowshiftstudio.jobcentre.domain.model.entity.Employer
 import com.shadowshiftstudio.jobcentre.domain.model.entity.JobVacancy
+import com.shadowshiftstudio.jobcentre.domain.model.request.AcceptUnemployedRequest
 import com.shadowshiftstudio.jobcentre.domain.model.request.CreateEmployerRequest
+import com.shadowshiftstudio.jobcentre.domain.model.response.GetAppliesForVacancies
 import com.shadowshiftstudio.jobcentre.domain.model.response.GetJobVacancyResponse
 import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Call
@@ -258,6 +260,102 @@ class EmployerRequest: IEmployerRepository {
                 override fun onFailure(call: Call<List<GetJobVacancyResponse>>, t: Throwable) {
                     Log.e("Network client error", t.message ?: "HTTP client failed to connect")
                     continuation.resume(voidResponse)
+                }
+            })
+
+            continuation.invokeOnCancellation {
+                call.cancel()
+            }
+        }
+    }
+
+    override suspend fun getAppliesVacancy(username: String): List<GetAppliesForVacancies> {
+        val backendService = EmployerClient.employerService
+
+        return suspendCancellableCoroutine { continuation ->
+            val call = backendService.getAppliesVacancy(username)
+
+            call.enqueue(object : Callback<List<GetAppliesForVacancies>> {
+                override fun onResponse(
+                    call: Call<List<GetAppliesForVacancies>>,
+                    response: Response<List<GetAppliesForVacancies>>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+                            continuation.resume(responseBody)
+                        } else {
+                            Log.e("Response Error", "Response body is null")
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<List<GetAppliesForVacancies>>, t: Throwable) {
+                    Log.e("Network client error", t.message ?: "HTTP client failed to connect")
+                }
+            })
+
+            continuation.invokeOnCancellation {
+                call.cancel()
+            }
+        }
+    }
+
+    override suspend fun acceptUnemployed(request: AcceptUnemployedRequest): String {
+        val backendService = EmployerClient.employerService
+
+        return suspendCancellableCoroutine { continuation ->
+            val call = backendService.acceptUnemployed(request)
+
+            call.enqueue(object : Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+                            continuation.resume(responseBody)
+                        } else {
+                            Log.e("Response Error", "Response body is null")
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("Network client error", t.message ?: "HTTP client failed to connect")
+                }
+            })
+
+            continuation.invokeOnCancellation {
+                call.cancel()
+            }
+        }
+    }
+
+    override suspend fun rejectUnemployed(request: AcceptUnemployedRequest): String {
+        val backendService = EmployerClient.employerService
+
+        return suspendCancellableCoroutine { continuation ->
+            val call = backendService.rejectUnemployed(request)
+
+            call.enqueue(object : Callback<String> {
+                override fun onResponse(
+                    call: Call<String>,
+                    response: Response<String>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null) {
+                            continuation.resume(responseBody)
+                        } else {
+                            Log.e("Response Error", "Response body is null")
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Log.e("Network client error", t.message ?: "HTTP client failed to connect")
                 }
             })
 

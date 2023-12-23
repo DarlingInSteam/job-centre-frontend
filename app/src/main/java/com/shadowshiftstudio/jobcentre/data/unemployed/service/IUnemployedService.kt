@@ -14,5 +14,5 @@ interface IUnemployedService {
     fun getUnemployedId(@Query("unemployedId") unemployedId: Long): Call<Unemployed>
 
     @POST("/unemployed/invite_unemployed")
-    fun inviteUnemployed(@Query("unemployedId") unemployedId: Long, @Query("vacancyId") vacancyId: Long)
+    fun inviteUnemployed(@Query("unemployedId") unemployedId: Long, @Query("vacancyId") vacancyId: Long): Call<String>
 }

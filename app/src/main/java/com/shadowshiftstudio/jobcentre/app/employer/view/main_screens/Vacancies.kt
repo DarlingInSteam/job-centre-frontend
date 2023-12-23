@@ -81,7 +81,7 @@ fun Vacancies(
             }
         }
         composable("vacancy") {
-            VacancyScreen(vacanciesViewModel.vacancy)
+            VacancyScreen(vacanciesViewModel.vacancy, navController)
         }
     }
 
@@ -274,7 +274,7 @@ fun VacancyList(viewModel: VacanciesViewModel, navController: NavController) {
         content = {
             allVacanciesState.value?.let {
                 items(count = it.size) { index ->
-                    VacancyCard(vacancy = allVacanciesState.value!![index], navController = navController, viewModel = viewModel)
+                    VacancyCard(vacancy = allVacanciesState.value!![index], navController = navController, viewModel = viewModel, 0, {})
                     Spacer(modifier = Modifier.height(20.dp))
                 }
             }

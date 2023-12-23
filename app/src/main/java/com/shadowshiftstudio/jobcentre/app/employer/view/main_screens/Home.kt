@@ -56,7 +56,7 @@ fun Home(
             }
         }
         composable("unemployed_screen") {
-            UnemployedScreen(navController, viewModel.unemployedFullScreen)
+            UnemployedScreen(navController, viewModel.unemployedFullScreen, viewModel)
         }
     }
 }

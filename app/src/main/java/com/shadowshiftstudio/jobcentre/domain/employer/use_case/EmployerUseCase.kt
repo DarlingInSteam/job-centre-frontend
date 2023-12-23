@@ -2,7 +2,9 @@ package com.shadowshiftstudio.jobcentre.domain.employer.use_case
 
 import com.shadowshiftstudio.jobcentre.domain.employer.repository.IEmployerRepository
 import com.shadowshiftstudio.jobcentre.domain.model.entity.Employer
+import com.shadowshiftstudio.jobcentre.domain.model.request.AcceptUnemployedRequest
 import com.shadowshiftstudio.jobcentre.domain.model.request.CreateEmployerRequest
+import com.shadowshiftstudio.jobcentre.domain.model.response.GetAppliesForVacancies
 import com.shadowshiftstudio.jobcentre.domain.model.response.GetJobVacancyResponse
 
 class EmployerUseCase(private val repository: IEmployerRepository) {
@@ -32,5 +34,17 @@ class EmployerUseCase(private val repository: IEmployerRepository) {
 
     suspend fun getJobVacancies(username: String): List<GetJobVacancyResponse> {
         return repository.getJobVacancies(username)
+    }
+
+    suspend fun getAppliesVacancy(username: String): List<GetAppliesForVacancies> {
+        return repository.getAppliesVacancy(username)
+    }
+
+    suspend fun acceptUnemployed(request: AcceptUnemployedRequest): String {
+        return repository.acceptUnemployed(request)
+    }
+
+    suspend fun rejectUnemployed(request: AcceptUnemployedRequest): String {
+        return repository.rejectUnemployed(request)
     }
 }

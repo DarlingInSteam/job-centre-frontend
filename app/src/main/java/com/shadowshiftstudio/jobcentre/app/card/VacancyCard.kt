@@ -17,7 +17,7 @@ import com.shadowshiftstudio.jobcentre.domain.model.enum.getRussianEducationLeve
 import com.shadowshiftstudio.jobcentre.domain.model.response.GetJobVacancyResponse
 
 @Composable
-fun VacancyCard(vacancy: GetJobVacancyResponse, navController: NavController, viewModel: VacanciesViewModel) {
+fun VacancyCard(vacancy: GetJobVacancyResponse, navController: NavController, viewModel: VacanciesViewModel, status: Int, onClick: () -> Unit) {
 
     val experienceText = when (val experience = vacancy.jobRequirement.workExperience) {
         1 -> "1 год"
@@ -43,8 +43,13 @@ fun VacancyCard(vacancy: GetJobVacancyResponse, navController: NavController, vi
     Card(
         modifier = Modifier
             .clickable {
-                viewModel.vacancy = vacancy
-                navController.navigate("vacancy")
+                if (status == 0) {
+                    viewModel.vacancy = vacancy
+                    navController.navigate("vacancy")
+                }
+                else {
+                    onClick()
+                }
             }
             .fillMaxWidth()
     ) {

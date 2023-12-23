@@ -14,4 +14,9 @@ class UnemployedUseCase(private val unemployedRepository: IUnemployedRepository)
     suspend fun getUnemployedById(unemployedId: Long): Unemployed? {
         return unemployedRepository.getUnemployedById(unemployedId)
     }
+
+    suspend fun applyUnemployed(unemployedId: Long, vacancyId: Long): String {
+        return unemployedRepository.applyUnemployed(unemployedId, vacancyId)
+    }
+
 }
