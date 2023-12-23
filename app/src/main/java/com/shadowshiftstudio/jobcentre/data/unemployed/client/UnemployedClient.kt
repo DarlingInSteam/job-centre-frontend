@@ -45,7 +45,7 @@ object UnemployedClient {
             .build()
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.86.215:8080")
+        .baseUrl("http://192.168.86.167:8080")
         .addConverterFactory(GsonConverterFactory.create())
         .client(client)
         .build()

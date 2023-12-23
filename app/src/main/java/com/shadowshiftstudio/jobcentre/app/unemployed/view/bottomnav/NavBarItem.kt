@@ -12,22 +12,22 @@ data class NavBarItem(
     val title: String,
     val icon: ImageVector,
 )
-object ConstantsEmployer {
+object ConstantsUnemployed {
     val BottomNavItems = listOf(
         NavBarItem(
             title = "Главная",
             icon = Icons.Default.Home,
-            route = "catalog"
+            route = "home"
         ),
         NavBarItem(
             title = "Мои резюме",
             icon = Icons.Filled.Info,
-            route = "tops"
+            route = "resume"
         ),
         NavBarItem(
             title = "Отклики",
             icon = Icons.Default.ListAlt,
-            route = "my"
+            route = "applies"
         ),
         NavBarItem(
             title = "Профиль",

@@ -3,6 +3,7 @@ package com.shadowshiftstudio.jobcentre.domain.employer.use_case
 import com.shadowshiftstudio.jobcentre.domain.employer.repository.IVacancyRepository
 import com.shadowshiftstudio.jobcentre.domain.model.entity.JobVacancy
 import com.shadowshiftstudio.jobcentre.domain.model.request.CreateJobVacancyRequest
+import com.shadowshiftstudio.jobcentre.domain.model.response.GetJobVacancyResponse
 
 class VacancyUseCase(private val repository: IVacancyRepository) {
     suspend fun createVacancy(request: CreateJobVacancyRequest): String {
@@ -23,5 +24,9 @@ class VacancyUseCase(private val repository: IVacancyRepository) {
 
     suspend fun updateVacancy(request: CreateJobVacancyRequest, vacancyId: Long): String {
         return repository.updateVacancy(request, vacancyId)
+    }
+
+    suspend fun getAllVacancy(): List<GetJobVacancyResponse> {
+        return repository.getAllVacancy()
     }
 }
